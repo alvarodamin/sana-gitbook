@@ -1,0 +1,1112 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Guia de Fluxo de Atendimento • SANA</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-circle">S</div>
+          <div class="project-info">
+            <span class="project-name">SANA Docs</span>
+            <span class="project-subtitle">Fluxo de Atendimento</span>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <div class="nav-section">
+            <p class="nav-section-title">Introdução</p>
+            <a class="nav-link" href="#visao-geral">Visão geral</a>
+            <a class="nav-link" href="#atores">Atores do fluxo</a>
+          </div>
+
+          <div class="nav-section">
+            <p class="nav-section-title">Etapas do fluxo</p>
+            <a class="nav-link" href="#etapa-1">Etapa 1 – Entrada do cliente</a>
+            <a class="nav-link" href="#etapa-2">Etapa 2 – Conteúdos de áudio e vídeo</a>
+            <a class="nav-link" href="#etapa-3">Etapa 3 – Reserva de horário</a>
+            <a class="nav-link" href="#etapa-4">Etapa 4 – Notificação ao doutor</a>
+            <a class="nav-link" href="#etapa-5">Etapa 5 – Conversa com o doutor</a>
+            <a class="nav-link" href="#etapa-6">Etapa 6 – Notificações de primeira consulta</a>
+            <a class="nav-link" href="#etapa-7">Etapa 7 – Pós-consulta</a>
+          </div>
+
+          <div class="nav-section">
+            <p class="nav-section-title">Referências</p>
+            <a class="nav-link" href="#referencias">Links e APIs</a>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <header class="content-header">
+          <p class="content-eyebrow">Guia interno</p>
+          <h1>Fluxo de Atendimento a partir da Interação do Cliente</h1>
+          <p class="content-lead">
+            Este site documenta, passo a passo, o fluxo completo de atendimento
+            orquestrado pelos assistentes SANA — desde a primeira mensagem do cliente
+            até a etapa pós-consulta, incluindo regras, exemplos de mensagens e
+            templates.
+          </p>
+        </header>
+
+        <section id="visao-geral" class="doc-section">
+          <h2>Visão geral</h2>
+          <p>
+            Quando um cliente interage com o nosso assistente instalado no site, redes
+            sociais, QR Code, Google Meu Negócio, anúncios Google ou anúncios em redes
+            sociais, ele é direcionado a enviar uma mensagem pré-definida para o número
+            de WhatsApp do doutor em questão.
+          </p>
+          <p>
+            Nesse WhatsApp do doutor está instalado o
+            <strong>SANA I.A COEX VENDEDOR</strong>, que recebe do
+            <strong>SANA I.A ORQUESTRADOR</strong>:
+          </p>
+          <ul>
+            <li>Ficha do cliente</li>
+            <li>Ficha do doutor</li>
+          </ul>
+          <p>
+            A partir dessas fichas e do prompt configurado, o SANA I.A COEX VENDEDOR
+            executa as ações estabelecidas, acessa as tools necessárias e conduz o
+            processo de venda de um horário do doutor para o cliente que está entrando em
+            contato.
+          </p>
+          <p>
+            Ao longo do fluxo, ele notifica o doutor através da
+            <strong>SANA CENTRAL ORQUESTRADOR</strong> (o “central” que trabalha para
+            todos os doutores e clientes), que por sua vez aciona diferentes
+            disparadores de notificação conforme cada etapa.
+          </p>
+
+          <figure class="doc-figure">
+            <img
+              src="images/fluxo-alto-nivel.png"
+              alt="Diagrama de alto nível do fluxo de atendimento entre cliente, assistentes SANA e doutor"
+            />
+            <figcaption>
+              Exemplo de diagrama de alto nível. Substitua por uma imagem exportada do seu
+              Lucidchart ou outra ferramenta de desenho.
+            </figcaption>
+          </figure>
+        </section>
+
+        <section id="atores" class="doc-section">
+          <h2>Atores do fluxo</h2>
+          <ul>
+            <li><strong>Cliente</strong>: pessoa que busca atendimento.</li>
+            <li>
+              <strong>SANA Assistente</strong>: assistente inicial (site, rede social etc.)
+              que monta a mensagem padrão de entrada para o cliente enviar para o doutor e entrega os dados para o SANA I.A Orquestrador para a criação das fichas.
+            </li>
+            <li>
+              <strong>SANA I.A Orquestrador</strong>: recebe os dados do SANA Assistente, monta a ficha inicial
+              do cliente e do doutor e decide qual SANA I.A COEX VENDEDOR deve assumir o atendimento para o cliente.
+            </li>
+            <li>
+              <strong>SANA I.A COEX VENDEDOR</strong>: assistente especialista que conduz as Etapas 1, 2, 3 e 4, seguindo as regras (regras de oferta de horário, templates, etc.).
+            </li>
+            <li>
+              <strong>SANA Central Orquestrador</strong>: coordena notificações e controla os disparadores (Notificação Reserva, Notificação Primeira Consulta, Cobrança de Contrato, Lembrete de Consulta).
+            </li>
+            <li>
+              <strong>SANA Disparador Notificação Reserva</strong> e
+              <strong>SANA Disparador Notificação Primeira Consulta</strong>: enviam
+              templates específicos para doutor e cliente, conforme orientação da
+              SANA Central Orquestrador.
+            </li>
+            <li><strong>Doutor</strong>: profissional responsável pelo atendimento.</li>
+          </ul>
+
+          <h3>Lead x Cliente</h3>
+          <ul>
+            <li>
+              <strong>Lead</strong>: todo contato que entra pelo fluxo (site / assistente),
+              mas ainda não converteu em consulta.
+            </li>
+            <li>
+              <strong>Cliente</strong>: lead convertido, que realizou uma consulta e firmou
+              um contrato com o doutor.
+            </li>
+          </ul>
+          <p>
+            O SANA I.A Orquestrador recebe os dados desse lead logo após a conversa com o
+            Assistente, cria as fichas e, a partir daí, o fluxo segue para o
+            <strong>SANA I.A COEX VENDEDOR</strong>, que assume as próximas etapas.
+          </p>
+        </section>
+
+        <section id="etapa-1" class="doc-section">
+          <h2>Etapa 1 – Conversa inicial com o Assistente</h2>
+
+          <p>
+            A Etapa 1 cobre <strong>dois momentos</strong>: (1) a triagem no site pelo SANA Assistente, com coleta de dados e envio ao backend; (2) a entrada no WhatsApp do doutor e a saudação do COEX, até a mensagem de ponte para a Etapa 2. O objetivo é qualificar o lead, registrar a origem e permitir remarketing para quem não chegar a abrir o WhatsApp.
+          </p>
+
+          <h3>1. No site: SANA Assistente</h3>
+          <p>
+            Ao clicar em qualquer CTA do site, abre-se o chat do <strong>SANA Assistente</strong>. Ele coleta:
+          </p>
+          <ul>
+            <li>Nome completo</li>
+            <li>Telefone/WhatsApp</li>
+            <li>Origem (CTA / página / campanha)</li>
+          </ul>
+          <p>
+            Com o telefone informado, o Assistente <strong>gera o link</strong> para o contato enviar a mensagem ao doutor no WhatsApp e <strong>dispara em paralelo</strong> os dados para o SANA I.A Orquestrador (ficha de análise) e para o sistema (tracking no Supabase). Quem conversa no site mas não clica no link pode ser acionado em remarketing.
+          </p>
+
+          <div class="example-card">
+            <div class="example-card-header">
+              <span class="badge badge-client">Exemplo de diálogo no site</span>
+            </div>
+            <p><strong>SANA Assistente:</strong> Olá! Eu sou o assistente da doutora Cíntia 😊 Para começar, qual é o seu nome completo?</p>
+            <p><strong>Contato:</strong> João da Silva</p>
+            <p><strong>SANA Assistente:</strong> Prazer, João! E qual é o seu número de WhatsApp?</p>
+            <p><strong>Contato:</strong> (41) 99999-9999</p>
+            <p><strong>SANA Assistente:</strong> Perfeito, João. Aqui está um link pronto para você falar com a doutora no WhatsApp. É só tocar e enviar a mensagem:</p>
+            <p><code>https://wa.me/...</code></p>
+          </div>
+
+          <h3>2. Envio de dados (backend)</h3>
+          <p>
+            O Assistente envia os dados para <strong>dois fluxos n8n</strong> em paralelo:
+          </p>
+          <ul>
+            <li><strong>Flow de Analysis</strong> — monta a ficha do lead para o SANA I.A Orquestrador (webhook Ficha do Contato - Analysis).</li>
+            <li><strong>Flow de Tracking</strong> — envia os mesmos dados para a API <code>track-lead</code>, que grava em <code>leads</code>, <code>sessions</code> e <code>interactions</code> no Supabase (histórico de navegação e consentimento).</li>
+          </ul>
+          <p>
+            Estrutura conceitual enviada: tipo de registro (lead), dados do lead (nome, telefone, origem), dados de contexto (data/hora, canal) e estado do fluxo (Etapa 0 – antes do WhatsApp).
+          </p>
+          <p><strong>Flow:</strong> Sana - Chat Assistant - Ficha do Contato - Analysis</p>
+          <p><strong>Webhook Analysis:</strong> <code>https://app.jumpverso.com.br/webhook/461a75a0-f0f8-41e3-981f-de14bb2e4d63</code></p>
+          <pre class="code-block"><code class="language-json">{
+  "lead_id": "e8ad8516-ee39-4ac0-831c-5c3260f19d56",
+  "session_id": "session_1768845766624",
+  "interaction_id": "f328e309-f753-4aa0-bbc4-243522f99693",
+  "lead_data": [
+    {
+      "nome": "Álvaro Damin",
+      "telefone": "54996790793",
+      "idioma": "pt-BR",
+      "pagina": "/chat",
+      "origem_clique": "pagina-chat",
+      "origem_clique_label": "Página Dedicada (Rede Social)",
+      "utm_source": "google",
+      "utm_medium": "cpc",
+      "utm_campaign": "Caxias_do_Sul",
+      "utm_content": "",
+      "utm_term": "Psicóloga Online",
+      "first_visit": "false",
+      "visit_count": "10",
+      "time_in_session": "1717",
+      "device_type": "desktop",
+      "session_start_time": "2026-01-19T18:02:46.624Z",
+      "timestamp": "2026-01-19T18:31:23.959Z"
+    }
+  ]
+}</code></pre>
+          <p><strong>Webhook Tracking:</strong> <code>https://app.jumpverso.com.br/webhook/6f18d815-a738-4827-ac54-4865949a5ae8</code></p>
+          <pre class="code-block"><code class="language-json">{
+  "nome": "Álvaro Damin",
+  "telefone": "54996790793",
+  "timestamp": "2026-01-19T18:31:23.959Z",
+  "referral_code": "212",
+  "origem_clique": "pagina-chat",
+  "origem_clique_label": "Página Dedicada (Rede Social)",
+  "has_utm": false,
+  "session_id": "session_1768845766624",
+  "current_page": "/chat",
+  "origem": "chat_whatsapp",
+  "form_id": "whatsapp_chat_form",
+  "cookie_consent": "accepted",
+  "termos_aceitos_por": "envio_formulario_whatsapp"
+}</code></pre>
+          <p>
+            Essa estrutura permite diferenciar lead (só conversou no site) de cliente (passou pelas etapas e realizou consulta).
+          </p>
+
+          <h3>3. Fluxo resumido (site → dados)</h3>
+          <div class="chart-flow">
+            <div class="chart-flow-step">
+              <span class="chart-flow-num">1</span>
+              <span class="chart-flow-label">Lead entra no site</span>
+            </div>
+            <div class="chart-flow-arrow" aria-hidden="true">↓</div>
+            <div class="chart-flow-step">
+              <span class="chart-flow-num">2</span>
+              <span class="chart-flow-label">Sana Assistant coleta informações</span>
+            </div>
+            <div class="chart-flow-arrow" aria-hidden="true">↓</div>
+            <div class="chart-flow-split">
+              <div class="chart-flow-branch">
+                <div class="chart-flow-step chart-flow-step-branch">
+                  <span class="chart-flow-num">3.1</span>
+                  <span class="chart-flow-label">Webhook de análise (Orquestrador)</span>
+                </div>
+              </div>
+              <div class="chart-flow-branch">
+                <div class="chart-flow-step chart-flow-step-branch">
+                  <span class="chart-flow-num">3.2</span>
+                  <span class="chart-flow-label">Webhook de tracking (Supabase)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3>4. No WhatsApp: entrada e saudação do COEX</h3>
+          <p>
+            Quando o contato clica no link e envia a mensagem no WhatsApp do doutor, o <strong>SANA I.A COEX VENDEDOR</strong> assume: (1) o cliente envia o texto padrão (nome e origem); (2) o COEX saúda, contextualiza e “apresenta” o lead ao doutor na conversa.
+          </p>
+          <div class="example-card">
+            <div class="example-card-header">
+              <span class="badge badge-client">Exemplo de saudação do COEX</span>
+            </div>
+            <p><strong>Cliente (WhatsApp):</strong> “Olá, meu nome é João. Acabei de falar com o assistente no site e gostaria de mais informações sobre o atendimento psicológico 🙂”</p>
+            <p><strong>SANA (COEX):</strong> Olá, (João) 😊 Estou te encaminhando para conversar diretamente com a (Cíntia Parisotto), psicóloga.</p>
+            <p><strong>SANA (COEX):</strong> Cíntia, este é o (João). Ele chegou pelo (Site) interessado no atendimento psicológico.</p>
+            <p><strong>SANA (COEX):</strong> (João), eu já notifiquei a (Cíntia), ela vai te responder em breve, assim que estiver disponível.</p>
+          </div>
+          <p>
+            Depois de um breve “respiro”, o COEX manda a <strong>mensagem de ponte</strong> e aciona a Etapa 2:
+          </p>
+          <div class="example-card">
+            <p>
+              <strong>SANA (COEX):</strong> (João), durante a ausência da (Cíntia) em nossa conversa eu vou lhe adiantar informações sobre o atendimento dela e também ver a disponibilidade de agenda, assim eu vou ajudando — eu sou um assistente eficiente heheh — mas logo ela se junta à nossa conversa, fique tranquilo.
+            </p>
+          </div>
+          <p>
+            Essa mensagem encerra a Etapa 1 e dá início à <strong>Etapa 2</strong> (áudio e vídeo conforme a ficha do cliente).
+          </p>
+
+        </section>
+
+        <section id="etapa-2" class="doc-section">
+          <h2>Etapa 2 – Entrega de áudio e vídeo</h2>
+          <p>
+            A <strong>Etapa 2</strong> é conduzida pelo <strong>SANA I.A COEX VENDEDOR</strong>. O COEX consulta a <strong>ficha de análise do lead</strong> produzida pelo SANA I.A Orquestrador e, com base no campo <strong><code>offer_media</code></strong>, envia o áudio e o <strong>vídeo</strong> correspondentes à intenção do lead (emergencial, presencial, online ou ambos).
+          </p>
+
+          <h3>Rotas de vídeo (4 tipos)</h3>
+          <p>Existem 4 conjuntos de conteúdo (áudio + vídeo):</p>
+          <ul>
+            <li><strong>1 – Emergencial</strong> (somente online)</li>
+            <li><strong>2 – Presencial</strong></li>
+            <li><strong>3 – Online</strong></li>
+            <li><strong>4 – Ambos</strong> (presencial e online)</li>
+          </ul>
+
+          <h3>Fluxo da Etapa 2</h3>
+          <div class="chart-flow">
+            <div class="chart-flow-step">
+              <span class="chart-flow-num">1</span>
+              <span class="chart-flow-label">Mensagem de ponte (fim Etapa 1)</span>
+            </div>
+            <div class="chart-flow-arrow" aria-hidden="true">↓</div>
+            <div class="chart-flow-step">
+              <span class="chart-flow-num">2</span>
+              <span class="chart-flow-label">COEX consulta ficha de análise (Orquestrador)</span>
+            </div>
+            <div class="chart-flow-arrow" aria-hidden="true">↓</div>
+            <div class="chart-flow-step">
+              <span class="chart-flow-num">3</span>
+              <span class="chart-flow-label">Lê offer_media (emergencial | presencial | online | ambos)</span>
+            </div>
+            <div class="chart-flow-arrow" aria-hidden="true">↓</div>
+            <div class="chart-flow-step">
+              <span class="chart-flow-num">4</span>
+              <span class="chart-flow-label">Envia áudio + vídeo da rota correspondente</span>
+            </div>
+            <div class="chart-flow-arrow" aria-hidden="true">↓</div>
+            <div class="chart-flow-step">
+              <span class="chart-flow-num">5</span>
+              <span class="chart-flow-label">Mensagem de transição ("analisando agenda...")</span>
+            </div>
+            <div class="chart-flow-arrow" aria-hidden="true">↓</div>
+            <div class="chart-flow-step">
+              <span class="chart-flow-num">6</span>
+              <span class="chart-flow-label">Dispara Etapa 3</span>
+            </div>
+          </div>
+
+          <h3>Como é definido o tipo (offer_media)</h3>
+          <p>
+            A IA de análise do Orquestrador classifica o lead e retorna <strong><code>offer_media</code></strong> com base em <strong>UTMs</strong>, <strong>DDD do celular</strong>, horário do contato, termos de busca e outras informações de comportamento. O COEX puxa essa ficha e escolhe a rota de áudio/vídeo conforme o valor retornado:
+          </p>
+          <ul>
+            <li><strong>emergencial</strong> — lead com sinal de urgência: buscou termos como “Psicólogo agora” ou entrou em contato de madrugada.</li>
+            <li><strong>presencial</strong> — mesma cidade do doutor; extraído de <code>utm_campaign</code>, DDD do celular e contexto (ex.: interesse por atendimento presencial).</li>
+            <li><strong>online</strong> — cidade diferente da do doutor; extraído de <code>utm_campaign</code> ou DDD do lead.</li>
+            <li><strong>presencial e online</strong> — quando não há intenção clara nem para online nem para presencial, mas o lead é da mesma cidade do doutor; oferece as duas modalidades.</li>
+          </ul>
+
+          <h3>Resposta da ficha de análise (exemplo)</h3>
+          <p>O Orquestrador devolve um JSON onde o COEX usa principalmente <code>offer_media</code> e os dados de <code>interactions</code> (UTMs, formulário, etc.):</p>
+          <pre class="code-block"><code class="language-json">[
+  {
+    "success": true,
+    "data": [
+      {
+        "id": "8634b426-ac9b-4a7b-b797-5a5ea8e046aa",
+        "interaction_id": "7a68ff24-a69a-405b-ba67-20a5343559dd",
+        "intent_level": "Média-Alta",
+        "journey_stage": "Meio/Fundo",
+        "classification_reason": "O lead veio através do clique no Botão Navbar Desktop...",
+        "observations": "Esta é a primeira visita do lead ao site...",
+        "approach_tone": "Racional e informativo.",
+        "analyzed_at": "2026-02-03T18:56:53.486651+00:00",
+        "interactions": {
+          "id": "7a68ff24-a69a-405b-ba67-20a5343559dd",
+          "lead_id": "e9877667-010c-48e8-abe7-4d2ceb213502",
+          "form_name": "WhatsApp Chat Form",
+          "utm_medium": null,
+          "utm_source": null,
+          "utm_campaign": null,
+          "interaction_date": "2026-02-03T18:56:31.531+00:00"
+        }
+      }
+    ],
+    "lead_id": "e9877667-010c-48e8-abe7-4d2ceb213502",
+    "interactions_count": 1,
+    "offer_media": "emergencial | online | presencial | presencial e online"
+  }
+]</code></pre>
+
+          <h3>Exemplo de diálogo na Etapa 2</h3>
+          <div class="example-card">
+            <p><strong>SANA:</strong> João, aqui está um áudio da própria Cíntia, onde ela explica rapidinho como funciona o atendimento e o que você pode esperar das sessões.</p>
+            <p><strong>(SANA I.A COEX envia o ÁUDIO correto conforme a ficha.)</strong></p>
+            <p><strong>SANA:</strong> E este é um vídeo curto para você conhecer um pouco mais sobre a Cíntia e a forma dela trabalhar.</p>
+            <p><strong>(SANA I.A COEX envia o VÍDEO da rota definida por <code>offer_media</code>.)</strong></p>
+          </div>
+          <p>Em seguida, o COEX prepara a transição para a Etapa 3:</p>
+          <div class="example-card">
+            <p><strong>SANA:</strong> (João), logo a (Cíntia) deve estar disponível. Enquanto isso, através do áudio e vídeo preparados por ela, você pode conhecê-la. Eu já estou analisando a agenda e logo retorno com informações…</p>
+          </div>
+          <p>A conclusão dessa entrega dispara a <strong>Etapa 3</strong>.</p>
+        </section>
+
+        <section id="etapa-3" class="doc-section">
+          <h2>Etapa 3 – Oferta de horários e reserva</h2>
+          <p>
+            Na <strong>Etapa 3</strong>, o <strong>SANA I.A COEX VENDEDOR</strong> usa a tool <strong><code>get_slots</code></strong> para obter os horários disponíveis da agenda do doutor. A tool já retorna os slots prontos para a IA ler e oferecer ao cliente.
+          </p>
+
+          <h3>Comportamento da tool get_slots</h3>
+          <ul>
+            <li><strong>Antecedência:</strong> só traz horários com pelo menos <strong>+2 horas</strong> em relação à hora atual.</li>
+            <li><strong>Tipos:</strong> retorna todos — <strong>online e presencial</strong>; e <strong>emergencial, padrão ou promocional</strong>.</li>
+            <li><strong>Janela:</strong> traz <strong>15 dias</strong> da agenda, já deixados em histórico para a IA.</li>
+          </ul>
+          <p>
+            A IA usa a ficha do cliente (online/presencial, cidade etc.) para escolher quais slots oferecer, e segue as <code>instructions_for_ai</code> do retorno (ex.: oferecer só horários de <code>available_days</code>, não sugerir <code>blocked_days</code>.
+          </p>
+
+          <h3>Formato da resposta (exemplo)</h3>
+          <p>A tool devolve uma estrutura com dias disponíveis, slots de cada dia, dias bloqueados e instruções para a IA:</p>
+          <pre class="code-block"><code class="language-json">{
+  "available_days": [
+    {
+      "date": "2026-02-12",
+      "day_of_week": "Quinta-feira",
+      "available_times": [
+        {
+          "id": "9b7b3623-1d1d-40c3-84a9-021391a0f0eb",
+          "time": "07:00",
+          "duration": "60 minutos",
+          "event_type": "presential",
+          "price": 25000
+        }
+      ],
+      "total_slots": 1
+    }
+  ],
+  "blocked_days": [
+    {
+      "date": "2026-02-08",
+      "reason": "Bloqueado pelo usuário"
+    }
+  ],
+  "instructions_for_ai": {
+    "context": "Estes são os horários disponíveis para agendamento de consultas.",
+    "rules": [
+      "Ofereça apenas horários listados em 'available_days'.",
+      "Não sugira datas listadas em 'blocked_days'.",
+      "Pergunte a preferência do paciente (manhã, tarde, dia da semana) para filtrar opções.",
+      "Cada slot tem um 'id' único que deve ser usado para confirmar o agendamento."
+    ]
+  }
+}</code></pre>
+          <p>
+            Se o cliente perguntar por uma data específica, a IA pode informar que não há disponibilidade quando essa data estiver em <code>blocked_days</code> ou quando não houver slots naquele dia.
+          </p>
+
+          <h3>Regras de oferta (COEX)</h3>
+          <ul>
+            <li>Primeira oferta: primeiro horário que respeite a preferência do cliente (online/presencial, tipo de preço).</li>
+            <li>Se o cliente não reservar em até 1 minuto após a primeira oferta, o COEX oferece um segundo horário (ex.: dia seguinte), respeitando as mesmas regras.</li>
+          </ul>
+          <p>
+            Durante a Etapa 3, o foco é a entrega dos templates de reserva. Interações paralelas do cliente devem ser tratadas na Etapa 4.
+          </p>
+
+          <h3>Fluxo da Etapa 3</h3>
+          <figure class="doc-figure doc-figure--flowchart">
+            <div class="doc-figure__flowchart-wrap">
+              <img
+                src="Jump - Fluxo Sana AI.svg"
+                alt="Fluxograma da Etapa 3 – oferta de horários e reserva (get_slots, templates, Sim/Não)"
+                class="flowchart-svg"
+                data-flowchart-src="Jump - Fluxo Sana AI.svg"
+              />
+            </div>
+            <p class="doc-figure__flowchart-actions">
+              <a href="view-flowchart.html?src=Jump%20-%20Fluxo%20Sana%20AI.svg" target="_blank" rel="noopener" class="flowchart-link">Abrir em nova aba (fundo escuro)</a>
+              <span class="doc-figure__flowchart-hint">Clique na imagem para expandir com zoom e arrastar.</span>
+            </p>
+            <figcaption>Fluxo da Etapa 3 – consulta agenda, oferta de slots e reserva.</figcaption>
+          </figure>
+
+          <h3>Templates de tentativa de reserva</h3>
+          <div class="template-notif template-notif--preview">
+            <div class="template-preview">
+              <span class="template-preview__label">Pré-visualizar</span>
+              <div class="template-preview__balloon">
+                <div class="template-preview__after"></div>
+                <span class="template-preview__body">
+                  [nome], encontrei um horário disponível:<br>
+                  👉 [dia_semana], às [hora], com valor de [preço] a consulta.<br><br>
+                  Para garantir esse horário reservado pra você, basta clicar em Reservar.
+                </span>
+                <span class="template-preview__time">11:24</span>
+                <div class="template-preview__actions">
+                  <hr class="template-preview__hr" />
+                  <div class="template-preview__btn"><span class="template-preview__btn-icon"></span>Reservar</div>
+                </div>
+              </div>
+              <span class="template-preview__caption">Template Tentativa 1</span>
+            </div>
+            <div class="template-preview">
+              <span class="template-preview__label">Pré-visualizar</span>
+              <div class="template-preview__balloon">
+                <div class="template-preview__after"></div>
+                <span class="template-preview__body">
+                  [nome], encontrei outro horário disponível caso fique melhor para você:<br>
+                  👉 [dia_semana], às [hora], com valor de [preço] a consulta.<br><br>
+                  Para garantir esse horário reservado pra você, basta clicar em Reservar.
+                </span>
+                <span class="template-preview__time">11:24</span>
+                <div class="template-preview__actions">
+                  <hr class="template-preview__hr" />
+                  <div class="template-preview__btn"><span class="template-preview__btn-icon"></span>Reservar</div>
+                </div>
+              </div>
+              <span class="template-preview__caption">Template Tentativa 2</span>
+            </div>
+          </div>
+          <pre class="code-block code-small"><code class="language-text">TEMPLATE TENTATIVA 1
+SANA: "{{nome}}, encontrei um horário disponível:
+👉 {{dia_semana}}, às {{hora}}, com valor de {{preço}} a consulta."
+
+SANA: "Para garantir esse horário reservado pra você, basta clicar em Reservar."
+[Reservar]
+
+TEMPLATE TENTATIVA 2
+SANA: "{{nome}}, encontrei outro horário disponível caso fique melhor para você:
+👉 {{dia_semana}}, às {{hora}}, com valor de {{preço}} a consulta."
+
+SANA: "Para garantir esse horário reservado pra você, basta clicar em Reservar."
+[Reservar]</code></pre>
+
+
+          <p>
+            Conforme o cliente tenha ou não efetuado reserva no TEMPLATE 1 ou no TEMPLATE 2, o SANA I.A COEX envia uma das mensagens abaixo e entra no modo <strong>Etapa 4</strong>.
+          </p>
+          <div class="example-card">
+            <div class="example-card-header">
+              <span class="badge badge-client">Reserva <strong>não</strong> efetuada</span>
+            </div>
+            <p>
+              <strong>SANA (COEX):</strong> (João), logo a (Cíntia) estará presente em nossa conversa e poderemos ver outros horários disponíveis ou encaixes conforme sua necessidade. Enquanto isso, se puder ouvir o áudio e ver o vídeo, logo ela chega aqui.
+            </p>
+          </div>
+          <div class="example-card">
+            <div class="example-card-header">
+              <span class="badge badge-client">Reserva <strong>efetuada</strong> (Template 1 ou 2)</span>
+            </div>
+            <p>
+              <strong>SANA (COEX):</strong> (João), sua reserva está garantida e logo a (Cíntia) estará presente em nossa conversa para conversar com você.
+            </p>
+          </div>
+        </section>
+
+        <section id="etapa-4" class="doc-section">
+          <h2>Etapa 4 – Notificação de reserva para o doutor</h2>
+          <p>
+            Na <strong>Etapa 4</strong>, o <strong>SANA I.A COEX</strong> aciona a
+            <strong>SANA Central Orquestrador</strong> e envia para ela:
+          </p>
+          <ul>
+            <li>A ficha do cliente, com o histórico até a Etapa 4.</li>
+            <li>A ficha do doutor, enriquecida com preferências e dados de agenda.</li>
+          </ul>
+          <p>
+            Com isso, a SANA Central Orquestrador consegue:
+          </p>
+          <ul>
+            <li>Entender quem é o cliente e o contexto do atendimento.</li>
+            <li>
+              Entender quem é o doutor (nome correto, telefone, janelas de notificação,
+              especialidade etc.).
+            </li>
+          </ul>
+          <p>
+            Ela então decide qual disparador deve ser usado e chama o
+            <strong>SANA Disparador Notificação Reserva</strong>, que apenas envia o
+            template escolhido.
+          </p>
+
+          <h3>Fluxo da Etapa 4</h3>
+          <figure class="doc-figure doc-figure--flowchart">
+            <div class="doc-figure__flowchart-wrap">
+              <img
+                src="Jump - Fluxo Sana AI - Etapa 4.svg"
+                alt="Fluxograma da Etapa 4 – notificação de reserva para o doutor"
+                class="flowchart-svg"
+                data-flowchart-src="Jump - Fluxo Sana AI - Etapa 4.svg"
+              />
+            </div>
+            <p class="doc-figure__flowchart-actions">
+              <a href="view-flowchart.html?src=Jump%20-%20Fluxo%20Sana%20AI%20-%20Etapa%204.svg" target="_blank" rel="noopener" class="flowchart-link">Abrir em nova aba (fundo escuro)</a>
+              <span class="doc-figure__flowchart-hint">Clique na imagem para expandir com zoom e arrastar.</span>
+            </p>
+            <figcaption>Fluxo da Etapa 4 – notificação ao doutor e templates de reserva.</figcaption>
+          </figure>
+
+          <h3>Templates de notificação de reserva</h3>
+          <div class="template-notif template-notif--preview">
+            <div class="template-preview">
+              <span class="template-preview__label">Pré-visualizar</span>
+              <div class="template-preview__balloon">
+                <div class="template-preview__after"></div>
+                <div class="template-preview__header">Reserva Confirmada</div>
+                <span class="template-preview__body">
+                  Olá, [DOUTOR]. Você recebeu uma reserva na sua agenda para a data: <strong>dd/mm/aaaa às HH:MM</strong>.<br><br>
+                  O [CLIENTE] está aguardando sua chegada na conversa para concluir o atendimento.<br><br>
+                  Deseja enviar a ficha de confirmação de primeira consulta?
+                </span>
+                <span class="template-preview__time">11:24</span>
+                <div class="template-preview__actions">
+                  <hr class="template-preview__hr" />
+                  <div class="template-preview__btn"><span class="template-preview__btn-icon"></span>Sim</div>
+                  <hr class="template-preview__hr" />
+                  <div class="template-preview__btn"><span class="template-preview__btn-icon"></span>Não</div>
+                </div>
+              </div>
+              <span class="template-preview__caption">Template 1 – Reserva realizada</span>
+            </div>
+            <div class="template-preview">
+              <span class="template-preview__label">Pré-visualizar</span>
+              <div class="template-preview__balloon">
+                <div class="template-preview__after"></div>
+                <div class="template-preview__header">Reserva Não Confirmada</div>
+                <span class="template-preview__body">
+                  Olá, [DOUTOR]. O [CLIENTE] está aguardando sua chegada na conversa para concluir o atendimento de reserva de horário.<br><br>
+                  <span class="template-preview__meta">Tipo de horário: [ONLINE / PRESENCIAL]</span>
+                </span>
+                <span class="template-preview__time">11:24</span>
+              </div>
+              <span class="template-preview__caption">Template 2 – Reserva não realizada (aguardar 4 min)</span>
+            </div>
+          </div>
+
+          <p>
+            Enquanto a SANA Central Orquestrador e o disparador trabalham, o SANA I.A COEX
+            VENDEDOR Etapa 4 permanece na conversa apenas para:
+          </p>
+          <ul>
+            <li>
+              Aguardar a chegada do doutor.
+            </li>
+            <li>
+              Responder dúvidas usando somente o que está na base de conhecimento do doutor, sempre
+              reforçando que o doutor logo se juntará à conversa.
+            </li>
+          </ul>
+        </section>
+
+        <section id="etapa-5" class="doc-section">
+          <h2>Etapa 5 – Conversa direta com o doutor</h2>
+          <p>
+            A <strong>Etapa 5</strong> começa quando o <strong>DOUTOR</strong> envia alguma mensagem na conversa ou interage pelo <strong>TEMPLATE</strong> enviado pelo <strong>SANA Disparador Notificação Reserva</strong>. Quando o doutor envia o <strong>FLOW de Confirmação de Primeira Consulta</strong> na conversa, o <strong>SANA I.A COEX</strong> deixa de conversar e de responder questionamentos; o <strong>DOUTOR</strong> finaliza o atendimento com suas próprias mensagens e com o auxílio dos assistentes do <strong>SANA Central Orquestrador</strong>.
+          </p>
+
+          <h3>Cliente sem reserva nos templates do COEX</h3>
+          <p>
+            O doutor pode conversar com o cliente <strong>antes</strong> de enviar o FLOW de Confirmação de Primeira Consulta. Nem sempre o cliente terá reservado um horário entre os oferecidos pelo SANA I.A COEX. Nesse caso, cabe ao <strong>DOUTOR</strong> encontrar um novo horário, realizar a reserva manual no calendário inteligente do Sana para o cliente e, em seguida, enviar o <strong>FLOW de Confirmação de Primeira Consulta</strong>.
+          </p>
+
+          <h3>Cliente com reserva feita pelo COEX</h3>
+          <p>
+            Se o cliente tiver aceitado uma das reservas oferecidas pelo SANA I.A COEX, o doutor pode enviar o <strong>FLOW de Confirmação de Primeira Consulta</strong> diretamente pela mensagem de confirmação recebida do <strong>SANA Disparador Notificação Reserva</strong>.
+          </p>
+
+          <h3>Templates de confirmação de reserva</h3>
+          <p>
+            Ainda não existe um template definido para envio ao lead. O que se pretende é um <strong>template de mensagem</strong> (no mesmo formato dos modelos de notificação já descritos), com uma única CTA: <strong>Preencher</strong>. O botão <em>Preencher</em> abre um <strong>WhatsApp Flow</strong> para o lead preencher alguns dados.
+          </p>
+          <div class="template-notif template-notif--preview">
+            <div class="template-preview">
+              <span class="template-preview__label">Pré-visualizar</span>
+              <div class="template-preview__balloon">
+                <div class="template-preview__after"></div>
+                <div class="template-preview__header">Confirmação de primeira consulta</div>
+                <span class="template-preview__body">
+                  Mensagem de confirmação ao lead. O botão abaixo abre o WhatsApp Flow para preenchimento dos dados.
+                </span>
+                <span class="template-preview__time">11:24</span>
+                <div class="template-preview__actions">
+                  <hr class="template-preview__hr" />
+                  <div class="template-preview__btn"><span class="template-preview__btn-icon"></span>Preencher</div>
+                </div>
+              </div>
+              <span class="template-preview__caption">Template de confirmação de reserva (exemplo – 1 CTA: Preencher → WhatsApp Flow)</span>
+            </div>
+          </div>
+
+          <p>
+            <strong>Somente os clientes que receberem o FLOW de Confirmação de Primeira Consulta</strong> passam para a <strong>Etapa 6</strong>.
+          </p>
+        </section>
+
+        <section id="etapa-6" class="doc-section">
+          <h2>Etapa 6 – Notificações de primeira consulta</h2>
+          <p>
+            A partir do momento em que o cliente recebe o
+            <strong>FLOW de Confirmação de Primeira Consulta</strong>, o
+            <strong>SANA I.A COEX</strong> não participa mais da conversa. O
+            <strong>SANA Central Orquestrador</strong> acompanha o status desse fluxo e o
+            <strong>SANA Disparador Notificação Primeira Consulta</strong> envia as
+            mensagens template conforme o fluxo abaixo — parte dos templates vai para o
+            <strong>doutor</strong> (t1, t2, t3, t10, t11) e parte para o <strong>lead</strong>
+            (t4 a t9). Os botões das mensagens ao doutor podem disparar envios ao lead
+            (ex.: Sim em t1 → envia t6; Sim em t2 → envia t7; Enviar Lembrete em t3 → envia t4).
+          </p>
+          <figure class="doc-figure doc-figure--flowchart">
+            <div class="doc-figure__flowchart-wrap">
+              <img
+                class="doc-figure__img flowchart-svg"
+                src="Jump - Fluxo Sana AI - Etapa 6.svg"
+                alt="Fluxograma Etapa 6 – notificações de primeira consulta (templates t1–t11)"
+                loading="lazy"
+                data-flowchart-src="Jump - Fluxo Sana AI - Etapa 6.svg"
+              />
+            </div>
+            <figcaption>Fluxo Etapa 5–6 – notificações de primeira consulta (t1–t11: doutor e lead).</figcaption>
+            <p class="doc-figure__flowchart-actions">
+              <a href="view-flowchart.html?src=Jump%20-%20Fluxo%20Sana%20AI%20-%20Etapa%206.svg" target="_blank" rel="noopener" class="flowchart-link">Abrir em nova aba (fundo escuro)</a>
+              <span class="doc-figure__flowchart-hint">Clique na imagem para expandir com zoom e arrastar.</span>
+            </p>
+          </figure>
+
+          <h3>Templates de notificação de primeira consulta</h3>
+
+          <p>
+            Os templates abaixo são enviados pelo <strong>SANA Disparador Notificação Primeira Consulta</strong>.
+          </p>
+
+          <p>
+            Parte dos templates vai para o <strong>doutor</strong> (t1, t2, t3, t10, t11) e parte para o <strong>lead</strong> (t4 a t9). Os botões das mensagens ao doutor podem disparar envios ao lead (ex.: Sim em t1 → envia t6; Sim em t2 → envia t7; Enviar Lembrete em t3 → envia t4).
+          </p>
+
+          <div class="template-notif template-notif--preview template-notif--spaced">
+            <div class="template-preview" id="template-t1">
+              <span class="template-preview__label">Pré-visualizar</span>
+              <div class="template-preview__balloon">
+                <div class="template-preview__after"></div>
+                <div class="template-preview__header">PRIMEIRA CONSULTA CONFIRMADA</div>
+                <span class="template-preview__body">
+                  Olá, {{doutor}}. A primeira consulta de {{lead}} foi confirmada e já consta em sua agenda.<br>
+                  Data: {{dd/mm/aa}}<br>
+                  Horário: {{hh:mm}}<br><br>
+                  Deseja enviar o link da reunião para esse contato?
+                </span>
+                <span class="template-preview__time">11:24</span>
+                <div class="template-preview__actions">
+                  <hr class="template-preview__hr" />
+                  <div class="template-preview__btn" data-scroll-to="template-t6"><span class="template-preview__btn-icon"></span>Sim</div>
+                  <hr class="template-preview__hr" />
+                  <div class="template-preview__btn"><span class="template-preview__btn-icon"></span>Não</div>
+                </div>
+              </div>
+              <div class="template-preview__caption">
+                <span class="template-preview__caption-tag">t1 · Doutor</span>
+                <p class="template-preview__caption-desc">Enviado para o Doutor. Acionado quando a primeira consulta foi confirmada pelo lead (atendimento <strong>online</strong>). Ao clicar em Sim, o sistema gera o link da reunião e envia ao lead (t6).</p>
+              </div>
+            </div>
+            <div class="template-preview" id="template-t2">
+              <span class="template-preview__label">Pré-visualizar</span>
+              <div class="template-preview__balloon">
+                <div class="template-preview__after"></div>
+                <div class="template-preview__header">PRIMEIRA CONSULTA CONFIRMADA</div>
+                <span class="template-preview__body">
+                  Olá, {{doutor}}. A primeira consulta de {{lead}} foi confirmada e já consta em sua agenda.<br>
+                  Data: {{data}}<br>
+                  Horário: {{horario}}<br><br>
+                  Deseja enviar o endereço do consultório para esse contato?
+                </span>
+                <span class="template-preview__time">11:24</span>
+                <div class="template-preview__actions">
+                  <hr class="template-preview__hr" />
+                  <div class="template-preview__btn" data-scroll-to="template-t7"><span class="template-preview__btn-icon"></span>Sim</div>
+                  <hr class="template-preview__hr" />
+                  <div class="template-preview__btn"><span class="template-preview__btn-icon"></span>Não</div>
+                </div>
+              </div>
+              <div class="template-preview__caption">
+                <span class="template-preview__caption-tag">t2 · Doutor</span>
+                <p class="template-preview__caption-desc">Enviado para o Doutor. Acionado quando a primeira consulta foi confirmada pelo lead (atendimento <strong>presencial</strong>). Ao clicar em Sim, o sistema busca o endereço na ficha do doutor e envia ao lead (t7).</p>
+              </div>
+            </div>
+            <div class="template-preview" id="template-t3">
+              <span class="template-preview__label">Pré-visualizar</span>
+              <div class="template-preview__balloon">
+                <div class="template-preview__after"></div>
+                <div class="template-preview__header">PRIMEIRA CONSULTA NÃO CONFIRMADA</div>
+                <span class="template-preview__body">
+                  Olá, {{doutor}}. {{lead}} ainda não confirmou a primeira consulta registrada em sua agenda. Data: {{data}} Horário: {{horario}}<br><br>
+                  Deseja enviar um lembrete ou cancelar reserva?
+                </span>
+                <span class="template-preview__time">11:24</span>
+                <div class="template-preview__actions">
+                  <hr class="template-preview__hr" />
+                  <div class="template-preview__btn" data-scroll-to="template-t4"><span class="template-preview__btn-icon"></span>Enviar Lembrete</div>
+                  <hr class="template-preview__hr" />
+                  <div class="template-preview__btn"><span class="template-preview__btn-icon"></span>Cancelar</div>
+                </div>
+              </div>
+              <div class="template-preview__caption">
+                <span class="template-preview__caption-tag">t3 · Doutor</span>
+                <p class="template-preview__caption-desc">Enviado para o Doutor. Acionado quando o lead ainda não confirmou a primeira consulta (1h antes do horário); o doutor pode enviar lembrete ao lead (Enviar Lembrete → envia t4) ou cancelar.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="template-notif template-notif--preview template-notif--spaced">
+            <div class="template-preview" id="template-t4">
+              <span class="template-preview__label">Pré-visualizar</span>
+              <div class="template-preview__balloon">
+                <div class="template-preview__after"></div>
+                <span class="template-preview__body">
+                  Olá, {{lead}}. Você não respondeu ao fluxo de confirmação da sua primeira consulta com {{doutor}}. Data: {{data}} Horário: {{horario}}<br><br>
+                  Deseja cancelar a reserva e notificar o(a) Doutor(a)?
+                </span>
+                <span class="template-preview__time">11:24</span>
+                <div class="template-preview__actions">
+                  <hr class="template-preview__hr" />
+                  <div class="template-preview__btn"><span class="template-preview__btn-icon"></span>Sim</div>
+                  <hr class="template-preview__hr" />
+                  <div class="template-preview__btn"><span class="template-preview__btn-icon"></span>Vou Concluir o Fluxo</div>
+                </div>
+              </div>
+              <div class="template-preview__caption">
+                <span class="template-preview__caption-tag">t4 · Lead</span>
+                <p class="template-preview__caption-desc">Enviado para o Lead. Acionado quando o doutor clica em Enviar Lembrete no t3, ou após 1h do envio do fluxo de confirmação sem resposta; o lead pode cancelar ou concluir o fluxo.</p>
+              </div>
+            </div>
+            <div class="template-preview" id="template-t5">
+              <span class="template-preview__label">Pré-visualizar</span>
+              <div class="template-preview__balloon">
+                <div class="template-preview__after"></div>
+                <span class="template-preview__body">
+                  Olá, {{lead}}. Você não respondeu ao fluxo de confirmação da sua primeira consulta com {{doutor}} para a data {{data}}, às {{horario}}. Caso a confirmação não seja realizada, o horário não estará garantido em sua agenda.<br><br>
+                  Deseja cancelar a reserva e notificar {{doutor}}?
+                </span>
+                <span class="template-preview__time">11:24</span>
+                <div class="template-preview__actions">
+                  <hr class="template-preview__hr" />
+                  <div class="template-preview__btn"><span class="template-preview__btn-icon"></span>Sim</div>
+                  <hr class="template-preview__hr" />
+                  <div class="template-preview__btn"><span class="template-preview__btn-icon"></span>Vou Concluir o Fluxo</div>
+                </div>
+              </div>
+              <div class="template-preview__caption">
+                <span class="template-preview__caption-tag">t5 · Lead</span>
+                <p class="template-preview__caption-desc">Enviado para o Lead. Acionado 1h30 antes do horário reservado quando o lead ainda não preencheu o fluxo de confirmação; pode cancelar ou concluir o fluxo.</p>
+              </div>
+            </div>
+            <div class="template-preview" id="template-t6">
+              <span class="template-preview__label">Pré-visualizar</span>
+              <div class="template-preview__balloon">
+                <div class="template-preview__after"></div>
+                <span class="template-preview__body">
+                  Olá, {{lead}}. Esta é a confirmação da sua primeira consulta com {{doutor}}. Data: {{data}} Horário: {{horario}}<br>
+                  O link da sua chamada é: {{link_chamada}}<br><br>
+                  Em caso de qualquer eventual problema, avise com antecedência.
+                </span>
+                <span class="template-preview__time">11:24</span>
+              </div>
+              <div class="template-preview__caption">
+                <span class="template-preview__caption-tag">t6 · Lead</span>
+                <p class="template-preview__caption-desc">Enviado para o Lead. Acionado quando o doutor clica em Sim no t1; contém a confirmação da consulta online e o link da reunião.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="template-notif template-notif--preview template-notif--spaced">
+            <div class="template-preview" id="template-t7">
+              <span class="template-preview__label">Pré-visualizar</span>
+              <div class="template-preview__balloon">
+                <div class="template-preview__after"></div>
+                <span class="template-preview__body">
+                  Olá, {{lead}}. Esta é a confirmação da sua primeira consulta com {{doutor}}. Data: {{data}} Horário: {{horario}}<br>
+                  O endereço do consultório está disponível no link: {{link_maps}}<br><br>
+                  Em caso de qualquer eventual problema, avise {{doutor}} com antecedência.
+                </span>
+                <span class="template-preview__time">11:24</span>
+              </div>
+              <div class="template-preview__caption">
+                <span class="template-preview__caption-tag">t7 · Lead</span>
+                <p class="template-preview__caption-desc">Enviado para o Lead. Acionado quando o doutor clica em Sim no t2; contém a confirmação da consulta presencial e o endereço do consultório.</p>
+              </div>
+            </div>
+            <div class="template-preview" id="template-t8">
+              <span class="template-preview__label">Pré-visualizar</span>
+              <div class="template-preview__balloon">
+                <div class="template-preview__after"></div>
+                <span class="template-preview__body">
+                  Olá, {{lead}}. Sua primeira consulta com {{doutor}} acontecerá em {{tempo_restante}}.
+                </span>
+                <span class="template-preview__time">11:24</span>
+              </div>
+              <div class="template-preview__caption">
+                <span class="template-preview__caption-tag">t8 · Lead</span>
+                <p class="template-preview__caption-desc">Enviado para o Lead. Acionado cerca de 30 minutos antes da primeira consulta confirmada; lembrete com o tempo restante para a consulta.</p>
+              </div>
+            </div>
+            <div class="template-preview" id="template-t9">
+              <span class="template-preview__label">Pré-visualizar</span>
+              <div class="template-preview__balloon">
+                <div class="template-preview__after"></div>
+                <span class="template-preview__body">
+                  Olá, {{lead}}. Sua primeira consulta com {{doutor}} foi cancelada, pois o fluxo de confirmação não foi preenchido dentro do prazo. Data: {{data}} Horário: {{horario}}<br><br>
+                  Caso deseje reagendar, entre em contato com o Doutor.
+                </span>
+                <span class="template-preview__time">11:24</span>
+              </div>
+              <div class="template-preview__caption">
+                <span class="template-preview__caption-tag">t9 · Lead</span>
+                <p class="template-preview__caption-desc">Enviado para o Lead. Acionado quando a reserva foi cancelada por não preenchimento do fluxo no prazo; informa o cancelamento e orienta a reagendar com o doutor.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="template-notif template-notif--preview template-notif--spaced">
+            <div class="template-preview" id="template-t10">
+              <span class="template-preview__label">Pré-visualizar</span>
+              <div class="template-preview__balloon">
+                <div class="template-preview__after"></div>
+                <span class="template-preview__body">
+                  Olá, {{doutor}}. {{lead}} informou que irá concluir o fluxo de confirmação da primeira consulta. Data: {{data}} Horário: {{horario}}<br><br>
+                  O horário permanece reservado até a confirmação.
+                </span>
+                <span class="template-preview__time">11:24</span>
+              </div>
+              <div class="template-preview__caption">
+                <span class="template-preview__caption-tag">t10 · Doutor</span>
+                <p class="template-preview__caption-desc">Enviado para o Doutor. Acionado quando o lead escolhe “Vou Concluir o Fluxo” em t4 ou t5; avisa que o horário permanece reservado até a confirmação.</p>
+              </div>
+            </div>
+            <div class="template-preview" id="template-t11">
+              <span class="template-preview__label">Pré-visualizar</span>
+              <div class="template-preview__balloon">
+                <div class="template-preview__after"></div>
+                <span class="template-preview__body">
+                  Olá, {{doutor}}. {{lead}} optou por cancelar a reserva da primeira consulta. Data: {{data}} Horário: {{horario}} A agenda foi atualizada automaticamente.
+                </span>
+                <span class="template-preview__time">11:24</span>
+              </div>
+              <div class="template-preview__caption">
+                <span class="template-preview__caption-tag">t11 · Doutor</span>
+                <p class="template-preview__caption-desc">Enviado para o Doutor. Acionado quando o lead opta por cancelar a reserva (Sim em t4 ou t5); a agenda é atualizada automaticamente.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="etapa-7" class="doc-section">
+          <h2>Etapa 7 – Pós-consulta</h2>
+          <p>
+            Aqui será definido o que acontece <strong>após a primeira consulta realizada</strong>
+            ou em caso de <strong>não comparecimento do cliente</strong>. Envolve:
+          </p>
+          <ul>
+            <li>Fechar contrato com o cliente ou liberar o horário.</li>
+            <li>
+              O <strong>SANA Central Orquestrador</strong> e seus assistentes
+              <strong>SANA Disparador de Cobrança de Contrato</strong> e
+              <strong>SANA Disparador Lembrete de Consulta</strong> atuam nessa fase.
+            </li>
+            <li>
+              Eles <strong>só trabalham depois que o cliente fecha um contrato</strong>
+              (ou seja, após a primeira consulta e a formalização do vínculo).
+            </li>
+          </ul>
+          <p class="doc-section__draft">
+            A escrever — está só na mente ainda.
+          </p>
+        </section>
+
+        <section id="referencias" class="doc-section">
+          <h2>Referências</h2>
+
+          <p>Você pode visualizar o documento original e acessar as ferramentas nos links abaixo.</p>
+
+          <ul class="ref-links">
+            <li>
+              <strong>Documento original (Google Docs):</strong>
+              <a href="https://docs.google.com/document/d/1ealQbnuujDHAbu4QRHzVImw456_evrIMYCV2gWjGXNU/edit?tab=t.0" target="_blank" rel="noopener">Abrir documento</a>
+            </li>
+            <li>
+              <strong>n8n:</strong>
+              <a href="https://app.jumpverso.com.br/" target="_blank" rel="noopener">https://app.jumpverso.com.br/</a>
+            </li>
+            <li>
+              <strong>Projeto no Lucidchart:</strong>
+              <a href="https://lucid.app/lucidchart/24d23332-b7b3-4953-8bf8-4d155baff2c4/edit?invitationId=inv_2ff18f6b-3775-4c2f-9645-ba7a9efe92fe&page=DzQuOS0QucBl#" target="_blank" rel="noopener">Abrir Lucidchart</a>
+            </li>
+          </ul>
+
+          <h3>Webhooks e referências de API (tools)</h3>
+
+          <div class="ref-api-block">
+            <h4>Book (criar lead + reservar slot)</h4>
+            <p>Usado pela IA para agendamento direto. Cria ou atualiza o lead e reserva o slot em uma operação.</p>
+            <p><strong>Endpoint:</strong> <code>POST /leads/book</code> (Supabase Edge Function <code>leads</code>).</p>
+            <p>Corpo da requisição: <code>telefone</code> (obrigatório), <code>slot_id</code> (obrigatório), <code>nome</code>, <code>email</code>, <code>atendimento_status</code> (opcional).</p>
+          </div>
+
+          <div class="ref-api-block">
+            <h4>get-leads</h4>
+            <p>Lista leads com filtros (telefone, nome, status etc.). Supabase Edge Function <code>get-leads</code>.</p>
+          </div>
+
+          <div class="ref-api-block">
+            <h4>send_media (enviar mídia)</h4>
+            <p>Tool para a IA enviar mídias (áudio, vídeo, imagem). Realiza uma chamada <strong>POST</strong> a um webhook do próprio n8n. No corpo da requisição deve ser indicado qual mídia deve ser usada (identificador ou tipo conforme configurado no fluxo).</p>
+          </div>
+        </section>
+
+        <footer class="site-footer">
+          <p>
+            Última atualização manual deste guia:
+            <span class="footer-date">preencher data aqui</span>.
+          </p>
+          <p class="footer-note">
+            Dica: sempre que alterar o fluxo definitivo no documento
+            <code>Fluxo Descritivo Atendimento.md</code>, lembre de refletir os ajustes
+            neste site.
+          </p>
+        </footer>
+      </main>
+    </div>
+
+    <div id="flowchart-modal" class="flowchart-modal" hidden aria-hidden="true">
+      <div class="flowchart-modal__backdrop"></div>
+      <button type="button" class="flowchart-modal__close" aria-label="Fechar">×</button>
+      <div class="flowchart-modal__content">
+        <img src="" alt="" class="flowchart-modal__img" draggable="false" />
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      (function () {
+        var modal = document.getElementById('flowchart-modal');
+        var modalImg = modal && modal.querySelector('.flowchart-modal__img');
+        var backdrop = modal && modal.querySelector('.flowchart-modal__backdrop');
+        var closeBtn = modal && modal.querySelector('.flowchart-modal__close');
+
+        var scale = 1, x = 0, y = 0, lastClientX = 0, lastClientY = 0, dragging = false;
+
+        function openModal(src) {
+          if (!modal || !modalImg) return;
+          modalImg.src = src;
+          scale = 1; x = 0; y = 0;
+          modalImg.style.transform = 'translate(0, 0) scale(1)';
+          modal.hidden = false;
+          modal.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+          if (!modal) return;
+          modal.hidden = true;
+          modal.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+        }
+
+        function applyTransform() {
+          if (!modalImg) return;
+          modalImg.style.transform = 'translate(' + x + 'px, ' + y + 'px) scale(' + scale + ')';
+        }
+
+        if (modalImg) {
+          modalImg.addEventListener('wheel', function (e) {
+            e.preventDefault();
+            var delta = e.deltaY > 0 ? -0.15 : 0.15;
+            scale = Math.min(4, Math.max(0.3, scale + delta));
+            applyTransform();
+          }, { passive: false });
+
+          modalImg.addEventListener('mousedown', function (e) {
+            if (e.button !== 0) return;
+            dragging = true;
+            lastClientX = e.clientX;
+            lastClientY = e.clientY;
+          });
+        }
+
+        document.addEventListener('mousemove', function (e) {
+          if (!dragging) return;
+          x += e.clientX - lastClientX;
+          y += e.clientY - lastClientY;
+          lastClientX = e.clientX;
+          lastClientY = e.clientY;
+          applyTransform();
+        });
+
+        document.addEventListener('mouseup', function () { dragging = false; });
+
+        if (backdrop) backdrop.addEventListener('click', closeModal);
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+        document.querySelectorAll('.doc-figure--flowchart .flowchart-svg').forEach(function (img) {
+          img.style.cursor = 'zoom-in';
+          img.addEventListener('click', function (e) {
+            e.preventDefault();
+            var src = img.getAttribute('data-flowchart-src') || img.src;
+            openModal(src);
+          });
+        });
+
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest('.template-preview__btn[data-scroll-to]');
+          if (!btn) return;
+          var id = btn.getAttribute('data-scroll-to');
+          var el = document.getElementById(id);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
+
