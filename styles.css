@@ -232,6 +232,10 @@ body {
   margin-top: 4px;
 }
 
+.doc-section--brainstorm {
+  border-left: 4px solid rgba(56, 189, 248, 0.5);
+}
+
 .ref-links {
   list-style: none;
   padding-left: 0;
@@ -486,8 +490,57 @@ body {
   margin: 0;
 }
 
+/* Botão de referência a outro template na descrição (tamanho fixo) */
+.template-caption-ref {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 22px;
+  padding: 0 6px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--accent);
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 6px;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.template-caption-ref:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: var(--accent);
+}
+
 .template-preview__btn[data-scroll-to] {
   cursor: pointer;
+}
+
+/* Destaque animado no template alvo ao clicar no botão (scroll-to) */
+.template-preview--highlight {
+  animation: template-highlight 2.8s ease-out forwards;
+}
+
+@keyframes template-highlight {
+  0% {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06), 0 0 0 4px var(--accent), 0 0 0 8px rgba(56, 189, 248, 0.35), 0 0 28px rgba(56, 189, 248, 0.3);
+    transform: scale(1.02);
+  }
+  25% {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06), 0 0 0 4px var(--accent), 0 0 0 8px rgba(56, 189, 248, 0.3), 0 0 20px rgba(56, 189, 248, 0.2);
+    transform: scale(1.02);
+  }
+  70% {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06), 0 0 0 4px rgba(56, 189, 248, 0.4), 0 0 0 8px transparent, 0 0 12px rgba(56, 189, 248, 0.1);
+    transform: scale(1);
+  }
+  100% {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    transform: scale(1);
+  }
 }
 
 .template-preview__meta {

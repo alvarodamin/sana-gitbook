@@ -36,6 +36,11 @@
           </div>
 
           <div class="nav-section">
+            <p class="nav-section-title">Ideias</p>
+            <a class="nav-link" href="#jornada-lead">Jornada do lead (brainstorm)</a>
+          </div>
+
+          <div class="nav-section">
             <p class="nav-section-title">Referências</p>
             <a class="nav-link" href="#referencias">Links e APIs</a>
           </div>
@@ -725,7 +730,9 @@ SANA: "Para garantir esse horário reservado pra você, basta clicar em Reservar
           <p>
             Os templates abaixo são enviados pelo <strong>SANA Disparador Notificação Primeira Consulta</strong>.
           </p>
-
+<p>
+  <strong>T1 = Template 01</strong>
+</p>
           <p>
             Parte dos templates vai para o <strong>doutor</strong> (t1, t2, t3, t10, t11) e parte para o <strong>lead</strong> (t4 a t9). Os botões das mensagens ao doutor podem disparar envios ao lead (ex.: Sim em t1 → envia t6; Sim em t2 → envia t7; Enviar Lembrete em t3 → envia t4).
           </p>
@@ -752,7 +759,7 @@ SANA: "Para garantir esse horário reservado pra você, basta clicar em Reservar
               </div>
               <div class="template-preview__caption">
                 <span class="template-preview__caption-tag">t1 · Doutor</span>
-                <p class="template-preview__caption-desc">Enviado para o Doutor. Acionado quando a primeira consulta foi confirmada pelo lead (atendimento <strong>online</strong>). Ao clicar em Sim, o sistema gera o link da reunião e envia ao lead (t6).</p>
+                <p class="template-preview__caption-desc">Enviado para o Doutor. Acionado quando a primeira consulta foi confirmada pelo lead (atendimento <strong>online</strong>). Ao clicar em Sim, o sistema gera o link da reunião e envia ao lead (<button type="button" class="template-caption-ref" data-scroll-to="template-t6">t6</button>).</p>
               </div>
             </div>
             <div class="template-preview" id="template-t2">
@@ -776,7 +783,7 @@ SANA: "Para garantir esse horário reservado pra você, basta clicar em Reservar
               </div>
               <div class="template-preview__caption">
                 <span class="template-preview__caption-tag">t2 · Doutor</span>
-                <p class="template-preview__caption-desc">Enviado para o Doutor. Acionado quando a primeira consulta foi confirmada pelo lead (atendimento <strong>presencial</strong>). Ao clicar em Sim, o sistema busca o endereço na ficha do doutor e envia ao lead (t7).</p>
+                <p class="template-preview__caption-desc">Enviado para o Doutor. Acionado quando a primeira consulta foi confirmada pelo lead (atendimento <strong>presencial</strong>). Ao clicar em Sim, o sistema busca o endereço na ficha do doutor e envia ao lead (<button type="button" class="template-caption-ref" data-scroll-to="template-t7">t7</button>).</p>
               </div>
             </div>
             <div class="template-preview" id="template-t3">
@@ -793,12 +800,12 @@ SANA: "Para garantir esse horário reservado pra você, basta clicar em Reservar
                   <hr class="template-preview__hr" />
                   <div class="template-preview__btn" data-scroll-to="template-t4"><span class="template-preview__btn-icon"></span>Enviar Lembrete</div>
                   <hr class="template-preview__hr" />
-                  <div class="template-preview__btn"><span class="template-preview__btn-icon"></span>Cancelar</div>
+                  <div class="template-preview__btn" data-scroll-to="template-t9"><span class="template-preview__btn-icon"></span>Cancelar</div>
                 </div>
               </div>
               <div class="template-preview__caption">
                 <span class="template-preview__caption-tag">t3 · Doutor</span>
-                <p class="template-preview__caption-desc">Enviado para o Doutor. Acionado quando o lead ainda não confirmou a primeira consulta (1h antes do horário); o doutor pode enviar lembrete ao lead (Enviar Lembrete → envia t4) ou cancelar.</p>
+                <p class="template-preview__caption-desc">Enviado para o Doutor. Acionado quando o lead ainda não confirmou a primeira consulta (1h antes do horário); o doutor pode enviar lembrete ao lead (Enviar Lembrete → envia <button type="button" class="template-caption-ref" data-scroll-to="template-t4">t4</button>) ou cancelar (<button type="button" class="template-caption-ref" data-scroll-to="template-t9">t9</button>).</p>
               </div>
             </div>
           </div>
@@ -815,14 +822,14 @@ SANA: "Para garantir esse horário reservado pra você, basta clicar em Reservar
                 <span class="template-preview__time">11:24</span>
                 <div class="template-preview__actions">
                   <hr class="template-preview__hr" />
-                  <div class="template-preview__btn"><span class="template-preview__btn-icon"></span>Sim</div>
+                  <div class="template-preview__btn" data-scroll-to="template-t11"><span class="template-preview__btn-icon"></span>Sim</div>
                   <hr class="template-preview__hr" />
-                  <div class="template-preview__btn"><span class="template-preview__btn-icon"></span>Vou Concluir o Fluxo</div>
+                  <div class="template-preview__btn" data-scroll-to="template-t10"><span class="template-preview__btn-icon"></span>Vou Concluir o Fluxo</div>
                 </div>
               </div>
               <div class="template-preview__caption">
                 <span class="template-preview__caption-tag">t4 · Lead</span>
-                <p class="template-preview__caption-desc">Enviado para o Lead. Acionado quando o doutor clica em Enviar Lembrete no t3, ou após 1h do envio do fluxo de confirmação sem resposta; o lead pode cancelar ou concluir o fluxo.</p>
+                <p class="template-preview__caption-desc">Enviado para o Lead. Acionado quando o doutor clica em Enviar Lembrete no <button type="button" class="template-caption-ref" data-scroll-to="template-t3">t3</button>; o lead pode cancelar ou concluir o fluxo.</p>
               </div>
             </div>
             <div class="template-preview" id="template-t5">
@@ -836,9 +843,9 @@ SANA: "Para garantir esse horário reservado pra você, basta clicar em Reservar
                 <span class="template-preview__time">11:24</span>
                 <div class="template-preview__actions">
                   <hr class="template-preview__hr" />
-                  <div class="template-preview__btn"><span class="template-preview__btn-icon"></span>Sim</div>
+                  <div class="template-preview__btn" data-scroll-to="template-t11"><span class="template-preview__btn-icon"></span>Sim</div>
                   <hr class="template-preview__hr" />
-                  <div class="template-preview__btn"><span class="template-preview__btn-icon"></span>Vou Concluir o Fluxo</div>
+                  <div class="template-preview__btn" data-scroll-to="template-t10"><span class="template-preview__btn-icon"></span>Vou Concluir o Fluxo</div>
                 </div>
               </div>
               <div class="template-preview__caption">
@@ -859,7 +866,7 @@ SANA: "Para garantir esse horário reservado pra você, basta clicar em Reservar
               </div>
               <div class="template-preview__caption">
                 <span class="template-preview__caption-tag">t6 · Lead</span>
-                <p class="template-preview__caption-desc">Enviado para o Lead. Acionado quando o doutor clica em Sim no t1; contém a confirmação da consulta online e o link da reunião.</p>
+                <p class="template-preview__caption-desc">Enviado para o Lead. Acionado quando o doutor clica em Sim no <button type="button" class="template-caption-ref" data-scroll-to="template-t1">t1</button>; contém a confirmação da consulta online e o link da reunião.</p>
               </div>
             </div>
           </div>
@@ -878,7 +885,7 @@ SANA: "Para garantir esse horário reservado pra você, basta clicar em Reservar
               </div>
               <div class="template-preview__caption">
                 <span class="template-preview__caption-tag">t7 · Lead</span>
-                <p class="template-preview__caption-desc">Enviado para o Lead. Acionado quando o doutor clica em Sim no t2; contém a confirmação da consulta presencial e o endereço do consultório.</p>
+                <p class="template-preview__caption-desc">Enviado para o Lead. Acionado quando o doutor clica em Sim no <button type="button" class="template-caption-ref" data-scroll-to="template-t2">t2</button>; contém a confirmação da consulta presencial e o endereço do consultório.</p>
               </div>
             </div>
             <div class="template-preview" id="template-t8">
@@ -925,7 +932,7 @@ SANA: "Para garantir esse horário reservado pra você, basta clicar em Reservar
               </div>
               <div class="template-preview__caption">
                 <span class="template-preview__caption-tag">t10 · Doutor</span>
-                <p class="template-preview__caption-desc">Enviado para o Doutor. Acionado quando o lead escolhe “Vou Concluir o Fluxo” em t4 ou t5; avisa que o horário permanece reservado até a confirmação.</p>
+                <p class="template-preview__caption-desc">Enviado para o Doutor. Acionado quando o lead escolhe “Vou Concluir o Fluxo” em <button type="button" class="template-caption-ref" data-scroll-to="template-t4">t4</button> ou <button type="button" class="template-caption-ref" data-scroll-to="template-t5">t5</button>; avisa que o horário permanece reservado até a confirmação.</p>
               </div>
             </div>
             <div class="template-preview" id="template-t11">
@@ -939,7 +946,7 @@ SANA: "Para garantir esse horário reservado pra você, basta clicar em Reservar
               </div>
               <div class="template-preview__caption">
                 <span class="template-preview__caption-tag">t11 · Doutor</span>
-                <p class="template-preview__caption-desc">Enviado para o Doutor. Acionado quando o lead opta por cancelar a reserva (Sim em t4 ou t5); a agenda é atualizada automaticamente.</p>
+                <p class="template-preview__caption-desc">Enviado para o Doutor. Acionado quando o lead opta por cancelar a reserva (Sim em <button type="button" class="template-caption-ref" data-scroll-to="template-t4">t4</button> ou <button type="button" class="template-caption-ref" data-scroll-to="template-t5">t5</button>); a agenda é atualizada automaticamente.</p>
               </div>
             </div>
           </div>
@@ -965,6 +972,39 @@ SANA: "Para garantir esse horário reservado pra você, basta clicar em Reservar
           </ul>
           <p class="doc-section__draft">
             A escrever — está só na mente ainda.
+          </p>
+        </section>
+
+        <section id="jornada-lead" class="doc-section doc-section--brainstorm">
+          <h2>Jornada do lead</h2>
+          <p>
+            Conjunto de ideias que <strong>não faz parte do fluxo principal</strong>, mas se conecta a ele: rastrear a jornada do lead por status, decidir o que fazer quando ele “chama de novo” e como guardar histórico. Tudo isso apoiado em uma tabela <strong><code>lead_journey</code></strong>: cada etapa registrada com um resumo, permitindo consultar todas as jornadas do lead a qualquer momento.
+          </p>
+
+          <h3>Status do lead</h3>
+          <p>
+            O lead percorre estados bem definidos: entra como <strong>Lead Novo</strong>, vira <strong>Lead Reservado</strong> ao reservar, <strong>Lead Confirmado</strong> ao confirmar a consulta, <strong>Cliente Ativo</strong> ao fechar contrato e <strong>Cliente Inativo</strong> quando o contrato deixa de ser renovado.
+          </p>
+
+          <h3>Registro e cancelamento</h3>
+          <p>
+            Para todas as situações é essencial <strong>registrar as datas de atendimento</strong> no banco (acumulando), pois isso sustenta as regras de “chamou de novo” e de limpeza de conversa. Em qualquer cancelamento — doutor ou cliente — deve-se registrar <strong>quem cancelou</strong> e devolver o status para <strong>Lead Novo</strong>.
+          </p>
+
+          <h3>Quando o lead “chama de novo”</h3>
+          <p>
+            <strong>Lead Reservado ou Lead Confirmado:</strong> comparar a data da reserva com a data de hoje. Se a reserva ainda não passou, a resposta usa a base de conhecimento (ficha do psicólogo e do cliente). Se já passou, inicia-se um novo atendimento do zero, sem apagar o histórico do atendimento anterior.
+          </p>
+          <p>
+            <strong>Lead Novo</strong> (nunca reservou nem confirmou): limpar a base e iniciar do zero. A conversa é limpa 24h após o último atendimento — daí a necessidade do registro de datas.
+          </p>
+          <p>
+            <strong>Cliente Ativo ou Cliente Inativo:</strong> por enquanto sem fluxo específico; deixar um <strong>hub pré-montado</strong> para evoluções futuras (ex.: consultar pagamento, reagendar).
+          </p>
+
+          <h3>Depois que vira cliente</h3>
+          <p>
+            A partir do momento em que o lead vira cliente, as conversas dos <strong>últimos 30 dias</strong> passam a ser salvas no banco em um único texto, independente de ter havido interação da I.A.
           </p>
         </section>
 
@@ -1102,12 +1142,19 @@ SANA: "Para garantir esse horário reservado pra você, basta clicar em Reservar
         });
 
         document.addEventListener('click', function (e) {
-          var btn = e.target.closest('.template-preview__btn[data-scroll-to]');
+          var btn = e.target.closest('[data-scroll-to]');
           if (!btn) return;
+          e.preventDefault();
           var id = btn.getAttribute('data-scroll-to');
           var el = document.getElementById(id);
           if (el) {
+            el.classList.remove('template-preview--highlight');
+            el.offsetHeight;
             el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            el.classList.add('template-preview--highlight');
+            setTimeout(function () {
+              el.classList.remove('template-preview--highlight');
+            }, 2800);
           }
         });
       })();
