@@ -137,11 +137,10 @@
           <ul>
             <li>
               <strong>Lead</strong>: todo contato que entra pelo fluxo (site / assistente),
-              mas ainda não converteu em consulta.
+              mas ainda não converteu em um contrato de atendimento.
             </li>
             <li>
-              <strong>Cliente</strong>: lead convertido, que realizou uma consulta e firmou
-              um contrato com o doutor.
+              <strong>Cliente</strong>: lead convertido, que realizou um atendimento e firmou um contrato.
             </li>
           </ul>
           <p>
@@ -160,7 +159,7 @@
 
           <h3>1. No site: SANA Assistente</h3>
           <p>
-            Ao clicar em qualquer CTA do site, abre-se o chat do <strong>SANA Assistente</strong>. Ele coleta:
+            Através dos pontos de entrada do Lead, todos os CTA estão mapeados para o <strong>SANA Assistente</strong> coletar as informações através do /CHAT. 
           </p>
           <ul>
             <li>Nome completo</li>
@@ -173,7 +172,7 @@
 
           <div class="example-card">
             <div class="example-card-header">
-              <span class="badge badge-client">Exemplo de diálogo no site</span>
+              <span class="badge badge-client">Exemplo de diálogo no CHAT</span>
             </div>
             <p><strong>SANA Assistente:</strong> Olá! Eu sou o assistente da doutora Cíntia 😊 Para começar, qual é o seu nome completo?</p>
             <p><strong>Contato:</strong> João da Silva</p>
@@ -411,7 +410,7 @@
           <h3>Comportamento da tool get_slots</h3>
           <ul>
             <li><strong>Antecedência:</strong> só traz horários com pelo menos <strong>+2 horas</strong> em relação à hora atual.</li>
-            <li><strong>Tipos:</strong> retorna todos — <strong>online e presencial</strong>; e <strong>emergencial, padrão ou promocional</strong>.</li>
+            <li><strong>Tipos:</strong> retorna de acordo com a ficha do cliente — <strong>online e presencial</strong>; e <strong>emergencial, padrão ou promocional</strong>.</li>
             <li><strong>Janela:</strong> traz <strong>15 dias</strong> da agenda, já deixados em histórico para a IA.</li>
           </ul>
           <p>
@@ -448,19 +447,18 @@
     "rules": [
       "Ofereça apenas horários listados em 'available_days'.",
       "Não sugira datas listadas em 'blocked_days'.",
-      "Pergunte a preferência do paciente (manhã, tarde, dia da semana) para filtrar opções.",
       "Cada slot tem um 'id' único que deve ser usado para confirmar o agendamento."
     ]
   }
 }</code></pre>
           <p>
-            Se o cliente perguntar por uma data específica, a IA pode informar que não há disponibilidade quando essa data estiver em <code>blocked_days</code> ou quando não houver slots naquele dia.
+            Se o cliente perguntar por uma data específica, a IA ignora a pergunta, não consulta nada. É preciso aguardar o Doutor chegar, e informar isso ao lead. A I.A precisa se concentrar em oferecer somente os dois horários.
           </p>
 
           <h3>Regras de oferta (COEX)</h3>
           <ul>
-            <li>Primeira oferta: primeiro horário que respeite a preferência do cliente (online/presencial, tipo de preço).</li>
-            <li>Se o cliente não reservar em até 1 minuto após a primeira oferta, o COEX oferece um segundo horário (ex.: dia seguinte), respeitando as mesmas regras.</li>
+            <li>Primeira oferta: primeiro horário que respeite a preferência do cliente de acordo com a ficha do cliente (online, presencial ou ambos) O preço ele tráz de acordo com o horário do calendário do doutor.</li>
+            <li>Se o cliente não reservar em até 1 minuto após a primeira oferta, o COEX oferece um segundo horário disponível a partir do dia seguinte, sempre, respeitando as mesmas regras.</li>
           </ul>
           <p>
             Durante a Etapa 3, o foco é a entrega dos templates de reserva. Interações paralelas do cliente devem ser tratadas na Etapa 4.
@@ -805,7 +803,7 @@ SANA: "Para garantir esse horário reservado pra você, basta clicar em Reservar
               </div>
               <div class="template-preview__caption">
                 <span class="template-preview__caption-tag">t3 · Doutor</span>
-                <p class="template-preview__caption-desc">Enviado para o Doutor. Acionado quando o lead ainda não confirmou a primeira consulta (1h antes do horário); o doutor pode enviar lembrete ao lead (Enviar Lembrete → envia <button type="button" class="template-caption-ref" data-scroll-to="template-t4">t4</button>) ou cancelar (<button type="button" class="template-caption-ref" data-scroll-to="template-t9">t9</button>).</p>
+                <p class="template-preview__caption-desc">Enviado para o Doutor. Acionado quando o lead ainda não confirmou a primeira consulta (1h30 antes do horário); o doutor pode enviar lembrete ao lead (Enviar Lembrete → envia <button type="button" class="template-caption-ref" data-scroll-to="template-t4">t4</button>) ou cancelar (<button type="button" class="template-caption-ref" data-scroll-to="template-t9">t9</button>).</p>
               </div>
             </div>
           </div>
@@ -956,9 +954,10 @@ SANA: "Para garantir esse horário reservado pra você, basta clicar em Reservar
           <h2>Etapa 7 – Pós-consulta</h2>
           <p>
             Aqui será definido o que acontece <strong>após a primeira consulta realizada</strong>
-            ou em caso de <strong>não comparecimento do cliente</strong>. Envolve:
+            ou em caso de <strong>não comparecimento do lead</strong>. Envolve:
           </p>
           <ul>
+            <li>Os leads que realizaram o priomeiro atendimento, mas não fecharem um contrato, permanecem leads. Quem firmar um contrato, se torna cliente.</li>
             <li>Fechar contrato com o cliente ou liberar o horário.</li>
             <li>
               O <strong>SANA Central Orquestrador</strong> e seus assistentes
@@ -993,13 +992,13 @@ SANA: "Para garantir esse horário reservado pra você, basta clicar em Reservar
 
           <h3>Quando o lead “chama de novo”</h3>
           <p>
-            <strong>Lead Reservado ou Lead Confirmado:</strong> comparar a data da reserva com a data de hoje. Se a reserva ainda não passou, a resposta usa a base de conhecimento (ficha do psicólogo e do cliente). Se já passou, inicia-se um novo atendimento do zero, sem apagar o histórico do atendimento anterior.
+            <strong>Lead Reservado ou Lead Confirmado:</strong> o COEX <strong>não responde</strong>. Se a data da reserva ainda não passou, o lead aguarda o fluxo normal (notificações, confirmação etc.). Se a data já passou, o status volta para <strong>Lead Novo</strong> e o COEX assume um novo atendimento.
           </p>
           <p>
-            <strong>Lead Novo</strong> (nunca reservou nem confirmou): limpar a base e iniciar do zero. A conversa é limpa 24h após o último atendimento — daí a necessidade do registro de datas.
+            <strong>Lead Novo</strong> (nunca chegou a reservar): o COEX responde. Se passaram mais de 24h do último atendimento, a base de conversa é limpa e inicia-se do zero — daí a necessidade do registro de datas.
           </p>
           <p>
-            <strong>Cliente Ativo ou Cliente Inativo:</strong> por enquanto sem fluxo específico; deixar um <strong>hub pré-montado</strong> para evoluções futuras (ex.: consultar pagamento, reagendar).
+            <strong>Cliente Ativo ou Cliente Inativo:</strong> o COEX não responde; uma <strong>nova I.A</strong> será responsável por esse atendimento. Por enquanto, deixar um <strong>hub pré-montado</strong> para evoluções futuras (ex.: consultar pagamento, reagendar).
           </p>
 
           <h3>Depois que vira cliente</h3>
